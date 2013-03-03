@@ -35,6 +35,13 @@ def scoreRed(checkIfRedScored, clientInfo):{
     f.close()
 }
 
+class clientObject(object):
+    def __init__(self,clientInfo):
+        self.sock = clientInfo[0]
+        self.address = clientInfo[1]
+    def update(self,message):
+        self.sock.send("Testamundo.\r\n".encode())
+
 class redServer:
     def _init_(self):
         self.HOST = socket.AF_INET
@@ -56,6 +63,7 @@ class redServer:
             clientInfo = self.serverSock.accept()
             data = clientInfo[0].recv(size)
             print("Client connected from {}.".format(clientInfo[1]))
+            self.clientThread.blueClientComputers.append(clientObject(clientInfo))
             #If at the end of a round; Rounds last 10 minutes.
             if (time.time() - self.COMPETITION_CLOCK) == 10:
                 #Reset the competition clock to the current time and update the round.
