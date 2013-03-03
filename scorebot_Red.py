@@ -48,7 +48,7 @@ class redServer:
         self.serversocket = socket.socket()
         self.serverSock.bind(self.ADDRESS)
         self.serverSock.listen(5)
-        self.clientThread = clientThread(self)
+        self.clientThread = blueClientThread(self)
         print("Starting client thread. . .")
         self.clientThread.start()
         print("Awaiting connections. . .")
