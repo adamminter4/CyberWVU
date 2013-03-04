@@ -1,0 +1,101 @@
+Here is more detailed notes for how to check the blue team's network. We don't want to blindly scan each machine in their network for each service, because not every machine will need to run apache. On top of that, Windows won't be running SSH, so passing checks on them will be pointless.
+
+Given the network setup from White Team, these are the following VLANs that blue will be working with:
+
+* Client VLAN - 192.168.192.0/30 (Windows Client Instance)
+* DMZ1 VLAN - 192.168.192.4/30 (Linux DMZ Instance)
+* DMZ2 VLAN - 192.168.192.8/30 (Windows Server DMZ Instance)
+* Internal VLAN - 192.168.192.12/30 (Linux Internal Instance)
+
+Each instance will have unique services, and some that overlap (Ex. SSH). These are the services and assets that each Blue Team instance will be running:
+
+* Client - No services
+* DMZ1 - Apache, SSH, Voting App, Wordpress
+* DMZ2 - DNS, Windows Sharing(?? Might be taken out??)
+* Internal - MySQL, SSH
+
+Going down the list, let's determine all the checks we need to make for each VLAN
+
+***Blanket Check for SSH***
+S.) SSH
+    a.) Is SSH running? (10 point penalty)
+    	* Check with Nagios script
+    b.) Is port 22 open? (5 point penalty)
+    	* Check with Nagios script; nmap is an option too
+    c.) Is the content valid? (2 point penalty)
+    	* Log into machine using Gold Team/Scorebot SSH keys
+	* EX: ssh scorebot@ipaddress '~/scorebot_script.sh && exit'
+
+Client - 192.168.192.0/30
+-Checks to be made: None
+
+
+DMZ1 192.168.192.4/30 (Linux) 
+-----------------------------------------------------------
+-Checks to be made: Apache, Wordpress site, Voting App, SSH
+
+1.) Apache
+    a.) Is Apache running? (10 point penalty)
+    	* Check with Nagios script
+    b.) Is port 80 open? (5 points penalty)
+    	* Check with Nagios script; nmap is an option too
+    c.) Is the content valid? (2 point penalty EACH)
+    	i.) wget votingApp.php; diff against votingApp.php on Gold Server
+	i.) wget index.html; diff against index.html on Gold Server
+
+S.) ***Blanket Check for SSH***
+
+
+DMZ2 192.168.192.8/30 (Windows Server)
+-----------------------------------------------------------
+-Checks to be made: DNS, Windows Sharing(?)
+
+1.) DNS
+    a.) Is DNS running? (10 point penalty)
+    	* Check with Nagios script
+    b.) Is port 53 open? (5 point penalty)
+    	* Check with Nagios script; nmap is an option too
+    c.) Is the content valid? (2 point penalty EACH)
+    	* DNS lookup of "hackistand"
+	* DNS lookup of "int001.hackistan"
+
+2.) Windows Sharing(?)
+    ** If we do use Windows Sharing, we may need to log into another instance and test functionality from there.
+    ** To do this, we can SSH into an instance, run a script of our choice, scp the results back, then record the results in scorebot.
+    
+    a.) Is Windows Sharing running? (10 point penalty)
+    	* Check with Nagios script (?)
+    b.) Is port 445 open? (5 point penalty)
+    	* Check with Nagios? nmap is an option too
+    c.) I have no idea what is going on. (Not sure how to check if valid)
+
+
+Internal - 192.168.192.12/30 (Linux)
+-----------------------------------------------------------
+-Checks to be made: MySQL, SSH
+
+1.) MySQL
+    a.) Is MySQL running? (10 point penalty)
+    	* Check with Nagios script
+    b.) Is port 3306 open? (5 point penalty)
+    	* Check with Nagios script; nmap is an option too
+    c.) Is the content valid? (2 point penalty)
+    	* Download (scp?) database of votes to Gold Server
+	* diff database of votes from Blue with database of votes on Gold
+
+
+S.) ***Blanket Check for SSH***
+    	
+
+
+Final Notes
+-----------------------------------------------------------
+This should check everything that the Blue Team is required to have running on their servers.
+
+Contributors to Gold Team score bots and scripts:  
+Adam Minter, Naveen Kumar, Barry Martin, David Krovich
+
+Version 0.5  
+03/04/2013
+
+^_^ Fin. ^_^
