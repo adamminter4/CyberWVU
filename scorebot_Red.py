@@ -51,6 +51,9 @@ class RedServer:
                 scoreRed()
                 print("Resetting the game clock for round {} and reopening the window for callbacks.", self.roundNumber + 1)
                 self.COMPETITION_CLOCK = time.time();
+                
+                #Need to reset the array of any callbacks for the next round.
+                self.collectionOfCallbacks = []
                 windowOpen = true
                 
         self.serverSock.close()
