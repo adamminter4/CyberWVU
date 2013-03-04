@@ -83,10 +83,12 @@ The following are the assets that we will be collecting from the blue team for o
 
 Nagios will come in handy for Blue Team's scorebot, as it already has scripts in place to check popular services. We will simply implement the scripts Nagios already has in place and parse out the information that it returns for scoring tier 1 and 2.
 
-
+Final Notes
+-------------------------------------------
 Contributors to Gold Team score bots and scripts: 
 Adam Minter, Naveen Kumar, Barry Martin, and David Krovich
 
 Version 0.5
 03/4/2013
-Fin.
+
+^_^ Fin. ^_^
