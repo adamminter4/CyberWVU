@@ -65,7 +65,7 @@ Each tier has a point value associated with it. As we stated earlier, Blue Team 
 
 Tier 1 - 10 points
 Tier 2 - 5 points
-Tier 3 - 2 points
+Tier 3 - 2 points (could possibly include multiple checks, each being worth 2 points)
 
 Another example: If the service is running, but the port is closed, then Blue Team will recieve 5 points. For a service such as Apache, if Blue passes tier 1 and 2, we will wget their index.html page. Our server will have a copy of Blue Team's index.html, so we will diff it against our copy. If there isn't a difference in the html pages, then Blue will pass the third tier of checks and recieve no penalty for that round. However, if Red Team defaces the homepage of the Blue Team's webserver, then our diff will come back positive. Blue Team will then be given 2 points for that service for the corresponding round.
 
@@ -75,12 +75,14 @@ The following are the services that we will be checking for Blue Team's network:
 * MySQL - 3306
 * Windows Sharing - 445
 * SSH - 22
+* DNS - 53
 
 The following are the assets that we will be collecting from the blue team for our tier 3 checks:
 
 * Wordpress homepage
 * Voting application written in PHP (Different from the voting application running on our Gold server)
 * Database of votes
+* Are the DNS names correct?
 * Can we SSH in?
 
 Nagios will come in handy for Blue Team's scorebot, as it already has scripts in place to check popular services. We will simply implement the scripts Nagios already has in place and parse out the information that it returns for scoring tier 1 and 2.
@@ -90,7 +92,7 @@ Final Notes
 Contributors to Gold Team score bots and scripts:  
 Adam Minter, Naveen Kumar, Barry Martin, and David Krovich
 
-Version 0.7  
+Version 0.8  
 03/4/2013
 
 ^_^ Fin. ^_^
