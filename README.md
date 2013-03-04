@@ -44,9 +44,11 @@ A perfect score for Red Team in this case would be 48 points. This would mean th
 
 Scorebot for Red Team:
 -------------------------
-The scorebot for Red Team is a simple echo server for the Red Team callback scripts to hit. The server will keep track of where the callback came from, and at the end of each Round, will log to a file the location of the callback, the round number, and how many points were scored for that round. 
+The scorebot for Red Team is a simple echo server for the Red Team callback scripts to hit. The server will keep track of where the callback came from, and at the end of each Round, will log to a file each location of the callback, the round number, how many points were scored for that round, and the total points Red Team has scored so far.
 
 If Red Team does not successfully callback within a round, it will write to the scoring file accordingly.
+
+At the end of the competiton, the file "redscore.txt" will contain each rounds scores and the total score for the Red Team.
 
 Finally, the Red Team will attempt to grab various tokens for show and tell after the competiton completes. These tokens are not currently scored, but only to demonstrate the abilities of the Red Team. The Gold Team will setup an FTP server for Red Team to send these tokens to.
 
