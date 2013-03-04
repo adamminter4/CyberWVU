@@ -90,7 +90,7 @@ Final Notes
 Contributors to Gold Team score bots and scripts: 
 Adam Minter, Naveen Kumar, Barry Martin, and David Krovich
 
-Version 0.5
+Version 0.7
 03/4/2013
 
 ^_^ Fin. ^_^
