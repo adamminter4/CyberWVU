@@ -7,18 +7,7 @@ A simple echo server for Red Team to connect to for scoring.
 import socket
 import time
 
-def scoreRed(checkIfRedScored, clientInfo):{
-    points = 0
-    if checkIfRedScored:
-       points = 1
-
-    f = open('redscore.txt', 'w')
-    f.write("Red Team scored " + points + " point(s) for Round " + roundNumber + "from the following address: \n")
-    f.write(clientInfo[0] + " " clientInfo[1] + "\n")
-    f.close()
-}
-
-class redServer:
+class RedServer:
     def _init_(self):
         self.HOST = socket.AF_INET
         self.PORT = 50000
@@ -52,5 +41,16 @@ class redServer:
             
         self.serverSock.close()
         print("- end -")
+
+    def scoreRed(checkIfRedScored, clientInfo):
+        points = 0
+        if checkIfRedScored:
+            points = 1
+        
+        f = open('redscore.txt', 'w')
+        f.write("Red Team scored " + points + " point(s) for Round " + roundNumber + "from the following address: \n")
+        f.write(clientInfo[0] + " " clientInfo[1] + "\n")
+        f.close()
+
 
 srvr = redServer()
