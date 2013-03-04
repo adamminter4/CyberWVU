@@ -87,10 +87,10 @@ Nagios will come in handy for Blue Team's scorebot, as it already has scripts in
 
 Final Notes
 -------------------------------------------
-Contributors to Gold Team score bots and scripts: 
+Contributors to Gold Team score bots and scripts:  
 Adam Minter, Naveen Kumar, Barry Martin, and David Krovich
 
-Version 0.7
+Version 0.7  
 03/4/2013
 
 ^_^ Fin. ^_^
