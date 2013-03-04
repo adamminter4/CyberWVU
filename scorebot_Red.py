@@ -6,23 +6,6 @@ A simple echo server for Red Team to connect to for scoring.
 
 import socket
 import time
-import threading
-import struct
-
-class blueClientThread:
-    def _init_(self):
-        threading.Thread._init_(self)
-        self.server = srvr
-        self.blueClientComputers = []
-        self.running = True
-        print("Client Thread created and running...");
-    def run(self):
-        print("Beginning Client thread loop")
-        while self.running:
-            for client in self.blueClientComputers:
-                message = client.sock.recv(self.server.BUFFSIZE)
-                if message != None and message != "":
-                    client.update(message)
 
 def scoreRed(checkIfRedScored, clientInfo):{
     points = 0
@@ -34,13 +17,6 @@ def scoreRed(checkIfRedScored, clientInfo):{
     f.write(clientInfo[0] + " " clientInfo[1] + "\n")
     f.close()
 }
-
-class clientObject(object):
-    def __init__(self,clientInfo):
-        self.sock = clientInfo[0]
-        self.address = clientInfo[1]
-    def update(self,message):
-        self.sock.send("Testamundo.\r\n".encode())
 
 class redServer:
     def _init_(self):
@@ -55,15 +31,12 @@ class redServer:
         self.serversocket = socket.socket()
         self.serverSock.bind(self.ADDRESS)
         self.serverSock.listen(5)
-        self.clientThread = blueClientThread(self)
-        print("Starting client thread. . .")
         self.clientThread.start()
-        print("Awaiting connections. . .")
+        print("Waiting for callbacks...")
         while self.running:
             clientInfo = self.serverSock.accept()
             data = clientInfo[0].recv(size)
-            print("Client connected from {}.".format(clientInfo[1]))
-            self.clientThread.blueClientComputers.append(clientObject(clientInfo))
+            print("Callback connected from {}.".format(clientInfo[1]))
             #If at the end of a round; Rounds last 10 minutes.
             if (time.time() - self.COMPETITION_CLOCK) == 10:
                 #Reset the competition clock to the current time and update the round.
@@ -74,9 +47,10 @@ class redServer:
                 if data:
                     clientInfo[0].send(data)
                     scoreRed(true, clientInfo)
-            else:
-               if updateRound():
-                        scoreRed(false, clientInfo)
+                else:
+                    scoreRed(false, clientInfo)
             
         self.serverSock.close()
         print("- end -")
+
+srvr = redServer()
